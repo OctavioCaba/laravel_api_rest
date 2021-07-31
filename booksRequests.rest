@@ -1,0 +1,38 @@
+GET http://127.0.0.1:8000/api/books HTTP/1.1
+content-type: application/json
+
+#################################################################
+
+GET http://127.0.0.1:8000/api/books/8 HTTP/1.1
+content-type: application/json
+
+#################################################################
+
+POST http://127.0.0.1:8000/api/books HTTP/1.1
+content-type: application/json
+
+{
+  "author_id": 4,
+  "title": "Lorem ipsum",
+  "plot": "Lorem ipsum",
+  "genre_id": 2,
+  "publication_year": 2021
+}
+
+#################################################################
+
+PUT http://127.0.0.1:8000/api/books/3 HTTP/1.1
+content-type: application/json
+
+{
+  "author_id": 1,
+  "title": "Lorem",
+  "plot": "Dolorem eos est debitis ea. Exercitationem quia esse dolores omnis. Voluptates pariatur nam et repellat voluptatem deleniti occaecati. Voluptatem mollitia eius suscipit rerum.",
+  "genre_id": 2,
+  "publication_year": 1980
+}
+
+#################################################################
+
+DELETE http://127.0.0.1:8000/api/books/7 HTTP/1.1
+content-type: application/json

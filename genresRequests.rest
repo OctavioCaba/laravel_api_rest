@@ -1,0 +1,30 @@
+GET http://127.0.0.1:8000/api/genres HTTP/1.1
+content-type: application/json
+
+#################################################################
+
+GET http://127.0.0.1:8000/api/genres/3 HTTP/1.1
+content-type: application/json
+
+#################################################################
+
+POST http://127.0.0.1:8000/api/genres HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Terror"
+}
+
+#################################################################
+
+PUT http://127.0.0.1:8000/api/genres/3 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Ciencia ficcion"
+}
+
+#################################################################
+
+DELETE http://127.0.0.1:8000/api/genres/2 HTTP/1.1
+content-type: application/json
