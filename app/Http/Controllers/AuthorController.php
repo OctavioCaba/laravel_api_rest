@@ -15,7 +15,17 @@ class AuthorController extends Controller
   public function index()
   {
     $authors = Author::all();
-    return response()->json($authors, 200);
+    $authorsArray = array();
+
+    foreach ($authors as $author) {
+      $authorsArray[] = [
+        'Name' => $author->first_name . ' ' . $author->last_name,
+        'Country' => $author->country,
+        'Age' => date('Y') - (int)$author->date_of_birth
+      ];
+    }
+
+    return response(json_encode($authorsArray, 200));
   }
 
   /**
@@ -51,7 +61,11 @@ class AuthorController extends Controller
       return response()->json(['message' => 'Could not find author'], 404);
     }
 
-    return response()->json($author, 200);
+    return response(json_encode([
+      'Name' => $author->first_name . ' ' . $author->last_name,
+      'Country' => $author->country,
+      'Age' => date('Y') - (int)$author->date_of_birth
+    ], 200));
   }
 
   /**

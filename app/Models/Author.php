@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Book;
 
 class Author extends Model
 {
@@ -18,5 +19,13 @@ class Author extends Model
 
   public function books() {
     return $this->hasMany('App\Models\Book');
+  }
+
+  public static function boot() {
+    parent::boot();
+
+    static::deleting(function($author) {
+      Book::where('author_id', $author->id)->delete();
+    });
   }
 }

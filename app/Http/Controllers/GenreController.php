@@ -15,7 +15,13 @@ class GenreController extends Controller
   public function index()
   {
     $genres = Genre::all();
-    return response()->json($genres, 200);
+    $genresArray = array();
+
+    foreach ($genres as $genre) {
+      $genresArray[] = ['Name' => $genre->name];
+    }
+
+    return response(json_encode($genresArray, 200));
   }
 
   /**
@@ -48,7 +54,7 @@ class GenreController extends Controller
       return response()->json(['message' => 'Genre could not be found'], 404);
     }
 
-    return response()->json($genre, 200);
+    return response(json_encode(['Name' => $genre->name], 200));
   }
 
   /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Author;
+use App\Models\Genre;
 
 class BookController extends Controller
 {
@@ -15,7 +17,28 @@ class BookController extends Controller
   public function index()
   {
     $books = Book::all();
-    return response()->json($books, 200);
+    $booksArray = array();
+    
+    foreach ($books as $book) {
+      $author = Author::find($book->author_id);
+      $authorName = $author->first_name . ' ' .  $author->last_name;
+
+      $genre = Genre::find($book->genre_id);
+      $genreName;
+      is_null($genre) ? $genreName = NULL : $genreName = $genre->name;
+
+      $booksArray[] = [
+        'Title' => $book->title,
+        'Plot' => $book->plot,
+        'Author' => $authorName,
+        'AuthorURL' => 'http://127.0.0.1:8000/api/authors/' . $book->author_id,
+        'Genre' => $genreName,
+        'GenreURL' => 'http://127.0.0.1:8000/api/genres/' . $book->genre_id,
+        'Year' => $book->publication_year
+      ];
+    }
+
+    return response(json_encode($booksArray, 200));
   }
 
   /**
@@ -52,7 +75,22 @@ class BookController extends Controller
       return response()->json(['message' => 'Could not find the book'], 404);
     }
 
-    return response()->json($book, 200);
+    $author = Author::find($book->author_id);
+    $authorName = $author->first_name . ' ' .  $author->last_name;
+
+    $genre = Genre::find($book->genre_id);
+    $genreName;
+    is_null($genre) ? $genreName = NULL : $genreName = $genre->name;
+
+    return response(json_encode([
+      'Title' => $book->title,
+      'Plot' => $book->plot,
+      'Author' => $authorName,
+      'AuthorURL' => 'http://127.0.0.1:8000/api/authors/' . $book->author_id,
+      'Genre' => $genreName,
+      'GenreURL' => 'http://127.0.0.1:8000/api/genres/' . $book->genre_id,
+      'Year' => $book->publication_year
+    ], 200));
   }
 
   /**
